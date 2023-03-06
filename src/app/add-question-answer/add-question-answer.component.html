@@ -1,0 +1,139 @@
+<div class="container" *ngIf="!quizForm.value.length && addForm">
+  <h1>Add your Question with Answer</h1>
+
+  <form [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+    <table class="table table-bordered" formArrayName="questions">
+      <tr>
+        <th colspan="2">Add Multiple Questions:</th>
+        <th width="150px">
+          <button type="button" (click)="addQuestion()" class="btn btn-primary">
+            Add New Question
+          </button>
+        </th>
+      </tr>
+      <tr
+        *ngFor="let questionInfo of questions().controls; let i = index"
+        [formGroupName]="i"
+      >
+        <td>
+          Question :
+          <input type="text" formControlName="question" class="form-control" />
+        </td>
+        <td>
+          <div
+            *ngIf="
+              questionInfo.get('questionType').value == 'Paragraph';
+              then thenBlock;
+              else elseBlock
+            "
+          ></div>
+          <ng-template #thenBlock>
+            <div>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  id="name"
+                  type="text"
+                  class="form-control"
+                  formControlName="answer"
+                  placeholder="Answer"
+                  aria-label="Answer"
+                  aria-describedby="basic-addon2"
+                  [disabled]="true"
+                />
+              </div></div
+          ></ng-template>
+          <ng-template #elseBlock>
+            Answer:
+            <div formArrayName="answers">
+              <div
+                class="input-group mb-3"
+                *ngFor="let answerInfo of answers(i).controls; let j = index"
+                [formGroupName]="j"
+              >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="answer"
+                  placeholder="Answer"
+                  aria-label="Answer"
+                  aria-describedby="basic-addon2"
+                />
+              </div>
+              <span
+                class="input-group-text"
+                id="basic-addon2"
+                (click)="addQuestionAnswer(i)"
+                >Add More Answer</span
+              >
+            </div>
+          </ng-template>
+        </td>
+      </tr>
+    </table>
+    <!-- [disabled]="!quizForm.get('questions.1')" -->
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()">
+      Submit
+    </button>
+  </form>
+</div>
+<div *ngIf="addForm == false">
+  <form [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+    <table class="table table-bordered" formArrayName="questions">
+      <tr
+        *ngFor="let questionInfo of questions().controls; let i = index"
+        [formGroupName]="i"
+      >
+        <td>Questions : {{ questionInfo.get("question").value }}</td>
+        <td>
+          Answer:
+          <div
+            *ngIf="
+              questionInfo.get('questionType').value == 'Paragraph';
+              then thenBlock;
+              else elseBlock
+            "
+          ></div>
+          <ng-template #thenBlock>
+            <div>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="answer"
+                  placeholder="Answer"
+                  aria-label="Answer"
+                  aria-describedby="basic-addon2"
+                />
+              </div></div
+          ></ng-template>
+          <ng-template #elseBlock>
+            <div formArrayName="answers">
+              <div
+                class="input-group mb-3"
+                *ngFor="let answerInfo of answers(i).controls; let j = index"
+                [formGroupName]="j"
+              >
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="answerInfo"
+                    [id]="flexCheckDefault_j"
+                  />
+                  <label class="form-check-label" [for]="flexCheckDefault_j">
+                    {{ answerInfo.get("answer").value }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </td>
+      </tr>
+    </table>
+
+    <button type="submit" class="btn btn-primary" (click)="onPreviewAnswer()">
+      Review My Answer
+    </button>
+  </form>
+</div>

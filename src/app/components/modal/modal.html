@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h4 class="modal-title">Hi there Choose your question Type!</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="questionType"
+      id="flexRadioDefault1"
+      value="Paragraph"
+      ngModel
+      #questionType="ngModel"
+    />
+    <label class="form-check-label" for="flexRadioDefault1"> Paragraph </label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="questionType"
+      id="flexRadioDefault2"
+      value="CheckBox"
+      checked
+      ngModel
+      #questionType="ngModel"
+    />
+    <label class="form-check-label" for="flexRadioDefault2"> CheckBox </label>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="addQuestionType()"
+  >
+    Done
+  </button>
+</div>

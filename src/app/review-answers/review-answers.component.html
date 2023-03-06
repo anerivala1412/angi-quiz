@@ -1,0 +1,13 @@
+<div *ngIf="questionsAnswers.length">
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let questionInfo of questionsAnswers">
+      Question: {{ questionInfo?.question }}
+      <ul class="list-group" *ngFor="let answer of questionInfo.answers">
+        <li class="list-group-item">{{ answer?.answer }}</li>
+      </ul>
+      <ul class="list-group">
+        <li class="list-group-item">{{ questionInfo?.answer }}</li>
+      </ul>
+    </li>
+  </ul>
+</div>
